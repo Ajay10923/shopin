@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Product - Seller Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: #f0f2f5;
+      color: #333;
+    }
+    header {
+      background-color: #1f2937;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 { margin: 0; font-size: 26px; }
+    .auth-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .auth-buttons button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    .auth-buttons button:hover {
+      background-color: #2563eb;
+    }
+    .menu-icon {
+      font-size: 26px;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+    .menu-content {
+      display: none;
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      background-color: white;
+      color: black;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+      z-index: 10;
+      overflow: hidden;
+    }
+    .menu-content a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #333;
+      transition: background 0.2s;
+    }
+    .menu-content a:hover {
+      background-color: #f3f4f6;
+    }
+    main {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    }
+    main h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #1f2937;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+    }
+    button.submit-btn {
+      margin-top: 30px;
+      background-color: #10b981;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+    button.submit-btn:hover {
+      background-color: #059669;
+    }
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .auth-buttons {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Add Product</h1>
+    <div style="display: flex; align-items: center;">
+      <div class="auth-buttons">
+        <button onclick="alert('Login form coming soon')">Login</button>
+        <button onclick="alert('Signup form coming soon')">Sign Up</button>
+      </div>
+      <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    </div>
+  </header>
+
+  <!-- Dropdown Menu -->
+  <div class="menu-content" id="menu">
+    <a href="Home Page.html">🏠 Home Page</a>
+    <a href="Sellerpage.html">🛍️ Seller Page</a>
+    <a href="#">📦 My Products</a>
+    <a href="Add Product.html">➕ Add Product</a>
+    <a href="#">📊 Sales Report</a>
+    <a href="#">👤 Account Settings</a>
+  </div>
+
+  <!-- Form Section -->
+  <main>
+    <h2>🛍️ Add a New Product</h2>
+    <form id="product-form">
+      <label for="name">Product Name</label>
+      <input type="text" id="name" required>
+
+      <label for="price">Price (₹)</label>
+      <input type="number" id="price" required>
+
+      <label for="image">Image URL</label>
+      <input type="url" id="image" required>
+
+      <label for="desc">Description</label>
+      <textarea id="desc" rows="4" required></textarea>
+
+      <button type="submit" class="submit-btn">Submit Product</button>
+    </form>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    document.getElementById("product-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const price = document.getElementById("price").value;
+      const image = document.getElementById("image").value;
+      const desc = document.getElementById("desc").value;
+
+      const product = { name, price, image, desc };
+
+      // Save to LocalStorage
+      const products = JSON.parse(localStorage.getItem("products")) || [];
+      products.push(product);
+      localStorage.setItem("products", JSON.stringify(products));
+
+      alert(`✅ Product "${name}" added!\n\nPrice: ₹${price}\nImage: ${image}\nDescription: ${desc}`);
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
